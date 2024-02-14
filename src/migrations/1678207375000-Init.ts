@@ -4,6 +4,22 @@ export class Init1678207375000 implements MigrationInterface {
     name = 'Init1678207375000'
 
     public async up(queryRunner: QueryRunner): Promise<void> {
+
+        await queryRunner.query(`
+            CREATE TABLE \`rol\` (
+            \`id\` int NOT NULL AUTO_INCREMENT,
+            \`rolname\` varchar(255) NOT NULL,
+            PRIMARY KEY (\`id\`)
+            ) ENGINE = InnoDB
+        `);
+
+        await queryRunner.query(`
+        INSERT INTO \`rol\` (\`rolname\`) VALUES
+            ('Estudiante'),
+            ('Maestro/a'),
+            ('Administrador');
+        `);
+
         await queryRunner.query(`
             CREATE TABLE \`user\` (
                 \`id\` varchar(36) NOT NULL,
@@ -14,10 +30,16 @@ export class Init1678207375000 implements MigrationInterface {
                 \`lastName\` varchar(255) NOT NULL,
                 \`password\` varchar(255) NOT NULL,
                 \`email\` varchar(255) NOT NULL,
+                \`roleId\` int,
                 UNIQUE INDEX \`IDX_e12875dfb3b1d92d7d7c5377e2\` (\`email\`),
-                PRIMARY KEY (\`id\`)
+                PRIMARY KEY (\`id\`),
+                CONSTRAINT \`FK_user_rol\` FOREIGN KEY (\`roleId\`) REFERENCES \`rol\` (\`id\`) ON DELETE SET NULL ON UPDATE CASCADE
             ) ENGINE = InnoDB
         `);
+
+
+        
+
         await queryRunner.query(`
             CREATE TABLE \`query-result-cache\` (
                 \`id\` int NOT NULL AUTO_INCREMENT,
@@ -40,6 +62,9 @@ export class Init1678207375000 implements MigrationInterface {
         `);
         await queryRunner.query(`
             DROP TABLE \`user\`
+        `);
+        await queryRunner.query(`
+            DROP TABLE \`rol\`
         `);
     }
 

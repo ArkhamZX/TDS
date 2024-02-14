@@ -20,4 +20,6 @@ export class UpdateUserInputType implements Partial<User> {
   @IsEmail({}, { message: 'Invalid Email' })
   email: string;
 
+  @Field({ nullable: true })
+  rolname?: string;
 }
