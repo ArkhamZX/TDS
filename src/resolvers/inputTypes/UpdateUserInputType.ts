@@ -24,6 +24,9 @@ export class UpdateUserInputType implements Partial<User> {
   @Field({ nullable: true })
   password?: string;
 
+  @Field(() => String, { nullable: true })
+  profileImage?: string;
+
   @Field(() => [String], { nullable: true })
   commentsIds?: string[];
 

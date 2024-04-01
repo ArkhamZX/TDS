@@ -27,6 +27,10 @@ export class User extends IEntity {
   @Field()
   @Column({ unique: true })
   public email!: string;
+  
+  @Field({ nullable: true })
+  @Column({ nullable: true }) // La columna puede ser nullable si la imagen no es requerida
+  public profileImage?: string; // URL de la imagen de perfil
 
   @Field(() => [Comment], { nullable: true })
   @OneToMany(() => Comment, (comment) => comment.author, { nullable: true })
