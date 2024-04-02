@@ -42,4 +42,18 @@ export class UserService {
     await GUSystemDataSource.manager.delete(User, entityId);
     return entityId;
   }
+
+  public async updateProfileImage(entityId: string, profileImage: string) {
+    const user = await GUSystemDataSource.manager.findOne(User, {
+      where: {
+        id: entityId,
+      },
+    });
+    if (!user) {
+      throw new Error('Usuario no encontrado');
+    }
+
+    user.profileImage = profileImage;
+    return GUSystemDataSource.manager.save(User, user);
+  }
 }

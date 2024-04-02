@@ -1,17 +1,18 @@
 import { Resolver, Mutation, Arg } from 'type-graphql';
-import GraphQLUpload  from 'graphql-upload';
-import { User } from '../../entities/User';
-import { UserService } from '../../services/UserService';
+import GraphQLUpload from 'graphql-upload';
+import { User } from '../entities/User';
+import { UserService } from '../services/UserService';
 import { createWriteStream } from 'fs';
 import path from 'path';
 
 @Resolver()
 export class ProfileImageResolver {
-  constructor(private userService: UserService) {} // Inyecta el servicio UserService
+  constructor(private userService: UserService) {}
 
   @Mutation(() => User)
   async uploadProfileImage(
-    @Arg('image', () => GraphQLUpload) upload: any 
+    @Arg('userId') userId: string,
+    @Arg('image', () => GraphQLUpload) upload: any
   ): Promise<User> {
     const { createReadStream, filename } = await upload;
 
@@ -24,18 +25,10 @@ export class ProfileImageResolver {
         .on('error', reject)
     );
 
-    // Obtener el usuario por su id
-    const user = await this.userService.getOne(filename);
-
-    // Verificar si el usuario existe
-    if (!user) {
-      throw new Error('Usuario no encontrado');
-    }
-
     // Actualizar el campo profileImage del usuario en la base de datos
-    user.profileImage = imagePath;
-    await this.userService.save(user); // Guarda el usuario actualizado en la base de datos
+    await this.userService.updateProfileImage(userId, imagePath);
 
-    return user;
+    // Retornar el usuario actualizado
+    return await this.userService.getOne(userId);
   }
 }
