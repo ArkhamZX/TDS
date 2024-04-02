@@ -51,4 +51,5 @@ export class User extends IEntity {
   @Field(() => [Message], { nullable: true })
   @OneToMany(() => Message, (message) => message.author)
   public sendMessages?: Message[];
+    static findOneOrFail: any;
 }
