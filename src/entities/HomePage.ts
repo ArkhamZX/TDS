@@ -1,7 +1,6 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToMany } from 'typeorm';
 import { ObjectType, Field, ID } from 'type-graphql';
 
-
 @Entity()
 @ObjectType()
 export class PublicationStatus {
