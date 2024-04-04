@@ -50,7 +50,7 @@
     "eslint-config-prettier": "^8.1.0",
     "eslint-plugin-vue": "^9.13.0",
     "express": "^4.19.2",
-    "graphql": "^16.6.0",
+    "graphql": "^16.8.1",
     "graphql-scalars": "^1.20.1",
     "graphql-upload": "^16.0.2",
     "husky": "^8.0.3",
