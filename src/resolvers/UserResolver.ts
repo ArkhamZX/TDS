@@ -93,6 +93,7 @@ export class UserResolver {
 
       const user = await GUSystemDataSource.manager.create(User, {
         ...saveUserInputType,
+        rol,
         password: await bcrypt.hash(saveUserInputType.password, 10),
       });
 
@@ -123,6 +124,7 @@ export class UserResolver {
       }
       const user = GUSystemDataSource.manager.create(User, {
         ...updateUserInputType,
+        rol,
       });
 
       return this.userService.save(user);

@@ -29,6 +29,10 @@ export class User extends IEntity {
   @Column({ unique: true })
   public email!: string;
 
+  @Field()
+  @Column({ unique: true })
+  public roleId!: string;
+
   @ManyToOne(() => Rol, (rol) => rol.users, { eager: true }) // Indica que es una relación ManyToOne
   @JoinColumn({ name: 'roleId', referencedColumnName: 'id' })
   @Field(() => Rol)
